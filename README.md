@@ -1,7 +1,4 @@
 # Assignment 1 – PS1: Smart Waste Collection Agent
-## Design Document
-
----
 
 ## Problem Statement
 
