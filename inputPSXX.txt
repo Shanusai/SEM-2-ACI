@@ -1,0 +1,27 @@
+Case 1:
+Number of Locations: 6
+Number of Roads: 8
+Road Connections:
+MG_Road Electronic_City 2
+MG_Road Koramangala 4
+Electronic_City Whitefield 2
+Whitefield Yelahanka 4
+Whitefield Jayanagar 6
+Jayanagar Yelahanka 2
+Koramangala Hebbal 3
+Hebbal Yelahanka 5
+Source: MG_Road
+Destination: Yelahanka
+
+Case 2:
+Number of Locations: 5
+Number of Roads: 6
+Road Connections:
+AB3
+AC2
+BD4
+CD1
+CE7
+DE2
+Source: A
+Destination: E
