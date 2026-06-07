@@ -3,13 +3,13 @@ Source: MG_Road
 Destination: Yelahanka
 Optimal Path: MG_Road -> Electronic_City -> Whitefield -> Yelahanka
 Total Travel Cost: 8
-Nodes Explored: 7
-Visited Sequence: MG_Road -> Electronic_City -> Whitefield | MG_Road -> Electronic_City -> Whitefield -> Yelahanka
+Nodes Explored: 10
+Visited Sequence: MG_Road -> Electronic_City -> Whitefield -> Yelahanka -> Jayanagar -> Koramangala | MG_Road -> Electronic_City -> Whitefield -> Yelahanka
 
 Case 2:
 Source: A
 Destination: E
 Optimal Path: A -> C -> D -> E
 Total Travel Cost: 5
-Nodes Explored: 11
-Visited Sequence: A | A -> C | A -> C -> D | A -> B -> C -> D -> E
+Nodes Explored: 22
+Visited Sequence: A -> B -> C | A -> B -> C -> D -> E | A -> B -> C -> D -> B -> E -> E | A -> B -> D -> C -> D -> B -> E

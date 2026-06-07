@@ -90,8 +90,8 @@ Notes:
 - Input file selection supports an exact path or a regex pattern that matches a single file name.
 - Edges must be provided explicitly as `U V W`; compact tokens like `AB3` are rejected.
 - The `PathStack` data structure reports `Stack overflow` when `push()` is called on a full stack, and `Stack underflow` when `pop()` is called on an empty stack.
-- The reported node count is `Nodes Explored`, counting total nodes visited during search.
-- `Visited Sequence` lists the deepest path explored in each IDA* iteration, not the optimal path itself.
+- The reported node count is `Nodes Explored`, counting all evaluated nodes during search, including pruned nodes.
+- `Visited Sequence` records nodes evaluated during each IDA* iteration, including pruned nodes.
 
 Files:
 - `ida_star_waste_collection.ipynb` – main notebook with code
@@ -138,8 +138,8 @@ python3 AS-1/ida_star_waste_collection.py 'input.*\.txt' AS-1/outputPSXX.txt
 ### Output meanings
 - `Optimal Path`: the lowest-cost route found by IDA*
 - `Total Travel Cost`: total edge weight along the optimal path
-- `Nodes Explored`: unique nodes visited during the search
-- `Visited Sequence`: deepest path explored in each IDA* iteration
+- `Nodes Explored`: all nodes evaluated during search, including pruned nodes
+- `Visited Sequence`: nodes evaluated during each IDA* iteration, including pruned nodes
 
 ---
 
@@ -148,11 +148,11 @@ python3 AS-1/ida_star_waste_collection.py 'input.*\.txt' AS-1/outputPSXX.txt
 **Case 1** (Bengaluru locations):
 - Optimal Path: MG_Road → Electronic_City → Whitefield → Yelahanka
 - Total Cost: 8
-- Nodes Explored: 4
-- Visited Sequence: MG_Road → Electronic_City → Whitefield | MG_Road → Electronic_City → Whitefield → Yelahanka
+- Nodes Explored: 10
+- Visited Sequence: MG_Road → Electronic_City → Whitefield → Yelahanka → Jayanagar → Koramangala | MG_Road → Electronic_City → Whitefield → Yelahanka
 
 **Case 2** (Abstract nodes):
 - Optimal Path: A → C → D → E
 - Total Cost: 5
-- Nodes Explored: 5
-- Visited Sequence: A | A → C | A → C → D | A → B → C → D → E
+- Nodes Explored: 22
+- Visited Sequence: A → B → C | A → B → C → D → E | A → B → C → D → B → E → E | A → B → D → C → D → B → E

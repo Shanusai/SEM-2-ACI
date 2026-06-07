@@ -327,7 +327,7 @@ def ida_star(
     path.push(source)
     print(f" Initial threshold = h({source}) = {h[source]}")
 
-    nodes_explored = [0]
+    nodes_explored = [0]  # count of nodes evaluated, including pruned nodes
     visited_per_iteration: list[list[str]] = []
     current_iter_visited: list[str] = []
     answer: list[Any] = [None]
@@ -338,14 +338,14 @@ def ida_star(
             return math.inf
 
         f = g + h[node]
+        nodes_explored[0] += 1
+        current_iter_visited.append(node)
         if f > threshold:
             print(
                 f"   Pruned {node}: f({node}) = g({g}) + h({h[node]}) = {f} > threshold({threshold})"
             )
             return f
 
-        nodes_explored[0] += 1
-        current_iter_visited.append(node)
         print(f"   Exploring {node}: g={g}, h={h[node]}, f={f} <= threshold({threshold})")
         print(f"   Current path: {' -> '.join(path.to_list())}")
 
@@ -427,9 +427,10 @@ def solve(cases: list[dict[str, Any]], output_file: Path = Path("outputPSXX.txt"
             print(f"Optimal Path: {path_str}")
             print(f"Total Travel Cost: {cost}")
             print(f"Nodes Explored: {explored}")
-            print("\nVisited Sequence (per iteration, separated by |):")
+            print("\nVisited Sequence (per iteration, including pruned nodes, separated by |):")
             for i, nodes in enumerate(visited, start=1):
                 print(f"  Iteration {i}: {' -> '.join(nodes)}")
+            print(f"\nVisited Sequence: {visited_str}")
 
             output_lines.extend([
                 f"Case {idx}:",
