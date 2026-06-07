@@ -79,11 +79,19 @@ The trade-off is that IDA* may re-expand some nodes across iterations, but for m
 The solution is implemented in a single Jupyter notebook: **ida_star_waste_collection.ipynb**
 
 Key components:
-- `read_input()` – parses the input file with flexible format handling
+- `read_input()` – parses the input file using explicit edge lines `node1 node2 weight`
 - `build_graph()` – constructs adjacency list representation
 - `compute_heuristic()` – BFS-based hop heuristic calculation
 - `ida_star_search()` – core IDA* with cycle detection and threshold iteration
 - `solve_and_display()` – runs all cases and writes output file
+
+Notes:
+- The command-line script now requires both input and output arguments.
+- Input file selection supports an exact path or a regex pattern that matches a single file name.
+- Edges must be provided explicitly as `U V W`; compact tokens like `AB3` are rejected.
+- The `PathStack` data structure reports `Stack overflow` when `push()` is called on a full stack, and `Stack underflow` when `pop()` is called on an empty stack.
+- The reported node count is `Nodes Explored`, counting total nodes visited during search.
+- `Visited Sequence` lists the deepest path explored in each IDA* iteration, not the optimal path itself.
 
 Files:
 - `ida_star_waste_collection.ipynb` – main notebook with code
@@ -112,9 +120,26 @@ Instead of IDA*, we could model this as a standard shortest-path problem using D
 
 ## 7. How to Run
 
-1. Place `ida_star_waste_collection.ipynb` and `inputPSXX.txt` in the same directory
-2. Open the notebook in Jupyter and run all cells
-3. Output will be printed in the notebook and saved to `outputPSXX.txt`
+From the notebook:
+1. Place `ida_star_waste_collection.ipynb` and `inputPSXX.txt` in the same directory.
+2. Open the notebook in Jupyter and run all cells.
+3. Output will be printed in the notebook and saved to `outputPSXX.txt`.
+
+From the Python module:
+```bash
+python3 AS-1/ida_star_waste_collection.py AS-1/inputPSXX.txt AS-1/outputPSXX.txt
+```
+
+The module also supports regex-based input selection when the pattern matches exactly one file name:
+```bash
+python3 AS-1/ida_star_waste_collection.py 'input.*\.txt' AS-1/outputPSXX.txt
+```
+
+### Output meanings
+- `Optimal Path`: the lowest-cost route found by IDA*
+- `Total Travel Cost`: total edge weight along the optimal path
+- `Nodes Explored`: unique nodes visited during the search
+- `Visited Sequence`: deepest path explored in each IDA* iteration
 
 ---
 
@@ -123,7 +148,11 @@ Instead of IDA*, we could model this as a standard shortest-path problem using D
 **Case 1** (Bengaluru locations):
 - Optimal Path: MG_Road → Electronic_City → Whitefield → Yelahanka
 - Total Cost: 8
+- Nodes Explored: 4
+- Visited Sequence: MG_Road → Electronic_City → Whitefield | MG_Road → Electronic_City → Whitefield → Yelahanka
 
 **Case 2** (Abstract nodes):
 - Optimal Path: A → C → D → E
 - Total Cost: 5
+- Nodes Explored: 5
+- Visited Sequence: A | A → C | A → C → D | A → B → C → D → E
